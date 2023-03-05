@@ -11,8 +11,8 @@ export const App = () => {
   const [search, setSearch] = useState('');
   const [images, setImages] = useState([]);
   const [page, setPage] = useState(1);
-  const [perPage, setPerPage] = useState(12);
-  const [error, setError] = useState(null);
+  const [perPage] = useState(12);
+  const [isError, setIsError] = useState(null);
   const [isLoading, setLoading] = useState(false);
 
   const getURL = async () => {
@@ -23,7 +23,8 @@ export const App = () => {
       setImages([...images, ...newImages]);
     } catch (error) {
       const errorMessage = error.message;
-      setError(errorMessage);
+      console.log(isError);
+      setIsError(errorMessage);
     } finally {
       setLoading(false);
     }
