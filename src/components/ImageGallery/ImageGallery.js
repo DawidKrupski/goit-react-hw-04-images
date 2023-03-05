@@ -19,20 +19,19 @@ export const ImageGallery = ({ images }) => {
     setIsModalOpen(false);
   };
 
-  const handleKeyDown = event => {
-    if (event.key === 'Escape' && isModalOpen) {
-      setIsModalOpen(false);
-      console.log('click');
-    }
-  };
-
   useEffect(() => {
+    const handleKeyDown = e => {
+      if (e.keyCode === 27) {
+        setIsModalOpen(false);
+      }
+    };
+
     window.addEventListener('keydown', handleKeyDown);
 
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [handleKeyDown]);
+  }, []);
 
   return (
     <>
