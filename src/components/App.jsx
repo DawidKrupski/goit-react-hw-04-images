@@ -47,7 +47,10 @@ export const App = () => {
   };
 
   useEffect(() => {
-    handleGetImages();
+    const fetchData = async () => {
+      handleGetImages();
+    };
+    fetchData();
   }, [page, search, handleGetImages]);
 
   return (
