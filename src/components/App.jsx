@@ -25,8 +25,8 @@ export const App = () => {
       setImages(prevImages => [...prevImages, ...newImages]);
     } catch (error) {
       const errorMessage = error.message;
-      console.log(errorMessage);
-      setIsError(isError);
+      setIsError(errorMessage);
+      console.log(isError);
     } finally {
       setLoading(false);
     }
