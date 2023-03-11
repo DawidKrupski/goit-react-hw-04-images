@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Button } from './Button/Button';
@@ -11,11 +11,13 @@ export const App = () => {
   const [search, setSearch] = useState('');
   const [images, setImages] = useState([]);
   const [page, setPage] = useState(1);
-  const [perPage] = useState(12);
   const [isError, setIsError] = useState(null);
   const [isLoading, setLoading] = useState(false);
 
-  const getURL = async () => {
+  const perPage = 12;
+
+  const handleGetImages = async () => {
+    setLoading(true);
     const url = `https://pixabay.com/api/?q=${search}&page=${page}&key=${API_key}&image_type=photo&orientation=horizontal&per_page=${perPage}`;
     try {
       const response = await axios.get(url);
@@ -23,35 +25,34 @@ export const App = () => {
       setImages([...images, ...newImages]);
     } catch (error) {
       const errorMessage = error.message;
-      console.log(isError);
+      console.log(errorMessage);
       setIsError(errorMessage);
+      setLoading(false);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleSubmit = async evt => {
-    setLoading(true);
+  const handleSubmit = evt => {
     evt.preventDefault();
+    const query = evt.target['query'].value;
+    if (query === search) return;
     setPage(1);
-    await setImages([]);
-    getURL();
+    setImages([]);
+    setSearch(query);
   };
 
-  const handleLoadMore = async evt => {
-    setLoading(true);
-    await setPage(prevPage => prevPage + 1);
-    getURL();
+  const handleLoadMore = () => {
+    setPage(prevPage => prevPage + 1);
   };
 
-  const handleInput = evt => {
-    const searchValue = evt.target.value;
-    setSearch(searchValue);
-  };
+  useEffect(() => {
+    handleGetImages();
+  }, [page, search]);
 
   return (
     <>
-      <Searchbar handleInput={handleInput} handleSubmit={handleSubmit} />
+      <Searchbar handleSubmit={handleSubmit} />
       <ImageGallery images={images} />
       {isLoading ? <Loader /> : null}
       {!isLoading ? (

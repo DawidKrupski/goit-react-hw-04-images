@@ -11,9 +11,9 @@ export const Searchbar = ({ handleInput, handleSubmit }) => {
         </button>
 
         <input
-          onChange={handleInput}
           className={css['searchForm-input']}
           type="text"
+          name="query"
           autoComplete="off"
           autoFocus
           placeholder="Search images and photos"
