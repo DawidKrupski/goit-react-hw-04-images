@@ -30,7 +30,7 @@ export const App = () => {
     } finally {
       setLoading(false);
     }
-  }, [search, page]);
+  }, [search, page, isError]);
 
   const handleSubmit = evt => {
     evt.preventDefault();
