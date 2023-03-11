@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Button } from './Button/Button';
