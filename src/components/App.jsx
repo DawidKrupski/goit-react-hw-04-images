@@ -16,22 +16,21 @@ export const App = () => {
 
   const perPage = 12;
 
-  const handleGetImages = async () => {
+  const handleGetImages = useCallback(async () => {
     setLoading(true);
     const url = `https://pixabay.com/api/?q=${search}&page=${page}&key=${API_key}&image_type=photo&orientation=horizontal&per_page=${perPage}`;
     try {
       const response = await axios.get(url);
       const newImages = response.data.hits;
-      setImages([...images, ...newImages]);
+      setImages(prevImages => [...prevImages, ...newImages]);
     } catch (error) {
       const errorMessage = error.message;
       console.log(errorMessage);
       setIsError(isError);
-      setLoading(false);
     } finally {
       setLoading(false);
     }
-  };
+  }, [search, page]);
 
   const handleSubmit = evt => {
     evt.preventDefault();
@@ -47,11 +46,8 @@ export const App = () => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      handleGetImages();
-    };
-    fetchData();
-  }, [page, search, handleGetImages]);
+    handleGetImages();
+  }, [handleGetImages]);
 
   return (
     <>
