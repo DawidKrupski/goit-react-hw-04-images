@@ -26,7 +26,7 @@ export const App = () => {
     } catch (error) {
       const errorMessage = error.message;
       console.log(errorMessage);
-      setIsError(errorMessage);
+      setIsError(isError);
       setLoading(false);
     } finally {
       setLoading(false);
@@ -48,7 +48,7 @@ export const App = () => {
 
   useEffect(() => {
     handleGetImages();
-  }, [page, search]);
+  }, [page, search, handleGetImages]);
 
   return (
     <>
